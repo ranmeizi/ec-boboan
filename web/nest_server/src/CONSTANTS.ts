@@ -1,0 +1,1 @@
+global.OK = 0

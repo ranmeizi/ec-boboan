@@ -1,0 +1,1 @@
+declare var OK: 0

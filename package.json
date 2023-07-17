@@ -1,0 +1,14 @@
+{
+  "name": "ec-boboan",
+  "private": true,
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "boboan",
+  "license": "MIT",
+  "workspaces": [
+    "web/*"
+  ],
+  "scripts": {
+    "dev": "yarn workspace nest_server start:dev"
+  }
+}
