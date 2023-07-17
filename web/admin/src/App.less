@@ -1,0 +1,197 @@
+.rvt-app {
+    height          : 100vh;
+    background-color: var(--bg-sec);
+    transition      : var(--transition);
+
+    .rvt-content {
+        display       : flex;
+        flex-direction: column;
+        overflow      : hidden;
+
+        .rvt-router-view {
+            position: relative;
+            flex    : 1;
+        }
+    }
+
+    .rvt-menu-badge{
+        color:inherit
+    }
+
+    .rvt-page {
+        height  : 100%;
+        width   : 100%;
+        position: relative;
+        overflow: hidden;
+
+        .rvt-page-scroll {
+            height    : 100%;
+            width     : 100%;
+            overflow-y: auto;
+        }
+
+        .page-shadow {
+            width     : 100%;
+            position  : absolute;
+            height    : 20px;
+            top       : -20px;
+            left      : 0;
+            box-shadow: 0 0 20px 0px rgb(0 0 0 / 20%);
+            transition: 0.5s;
+            opacity   : 0;
+            z-index   : 11;
+        }
+
+        .rvt-page-layout {
+            padding: 20px;
+        }
+
+        .full-page {
+            position  : absolute;
+            top       : 0;
+            left      : 0;
+            height    : 100%;
+            width     : 100%;
+            overflow-y: scroll;
+        }
+
+        .rvt-page-bottom {
+            position  : absolute;
+            z-index   : 11;
+            left      : 0;
+            bottom    : 0;
+            width     : 100%;
+            box-shadow: 0 0 20px 0px rgb(0 0 0 / 10%);
+
+            .ant-card-body {
+                padding: 16px 24px;
+            }
+        }
+    }
+
+    .header-btn {
+        height     : 50px;
+        width      : 100px;
+        cursor     : pointer;
+        line-height: initial;
+        transition : 0.2s;
+    }
+
+    .dark-mode {
+        &.active {
+            color: #40a9ff
+        }
+    }
+
+    .github {
+        &.hover {
+            color: #40a9ff;
+        }
+    }
+}
+
+.ka-wrapper {
+    position: absolute;
+    height  : 100%;
+    width   : 100%;
+    top     : 0;
+    left    : 0;
+
+    .ka-content {
+        height: 100%;
+        width : 100%;
+    }
+}
+
+.rvt-router-tab {
+    .ant-tabs-nav {
+        margin-bottom: 0;
+    }
+
+    .ant-tabs-tab {
+        user-select: none;
+        padding: 0 8px 0 0 !important;
+    }
+    .ant-tabs-tab-remove{
+        margin: 0;
+    }
+
+    .rvt-tabpane{
+        padding: 6px 8px 6px 16px;
+    }
+
+    .rvt-tabpane-dropdown {
+        display      : flex;
+        justify-items: center;
+        align-items  : center;
+    }
+}
+
+.sort-area {
+    .ant-tabs-tab {
+        transition: initial;
+    }
+
+    .sortable-chosen {
+        // background: rgba(0, 77, 222, .3);
+    }
+
+    .sortable-ghost {
+        background: rgba(0, 77, 222, .15);
+    }
+}
+
+.transition-group {
+    position: absolute;
+    height  : 100%;
+    width   : 100%;
+    top     : 0;
+    left    : 0;
+
+    .forward-enter {
+        opacity  : 0;
+        transform: translateX(30px);
+    }
+
+    .forward-enter-active {
+        opacity   : 1;
+        transform : translateX(0);
+        transition: all 500ms;
+    }
+
+    .forward-exit {
+        opacity  : 1;
+        transform: translateX(0);
+    }
+
+    .forward-exit-active {
+        opacity   : 0;
+        transform : translateX(-30px);
+        transition: all 500ms;
+    }
+
+    .back-enter {
+        opacity  : 0;
+        transform: translateX(-30px);
+    }
+
+    .back-enter-active {
+        opacity   : 1;
+        transform : translateX(0);
+        transition: all 500ms;
+    }
+
+    .back-exit {
+        opacity  : 1;
+        transform: translateX(0);
+    }
+
+    .back-exit-active {
+        opacity   : 0;
+        transform : translate(30px);
+        transition: all 500ms;
+    }
+}
+
+// 我们自己的设计风格
+@import './theme/FishDesign/index.less';
