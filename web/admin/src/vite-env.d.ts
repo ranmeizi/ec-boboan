@@ -56,13 +56,3 @@ type TabPane = {
   title: string;
   icon: string;
 };
-
-declare namespace Res {
-  export type data<T> = Promise<T>;
-  export type page<T> = Promise<{
-    list: T[];
-    total: number;
-    pageSize: number;
-    pageNumber: number;
-  }>;
-}

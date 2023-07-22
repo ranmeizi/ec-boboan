@@ -7,6 +7,9 @@ function main() {
     // while (true) {
     //     sleep(1000)
     // }
+    let a = ui.findViewByTag('name')
+    console.log('eventdom')
+    console.log(a)
 
     // logd('down')
     Connection.run()

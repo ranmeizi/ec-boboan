@@ -26,12 +26,17 @@ export class EventsGateway {
   server: Server;
 
   handleConnection(socket, req) {
-    console.log('connection')
     this.ip = req.socket.remoteAddress;
     this.connect(socket)
+
+    // control 为控制端的 admin，为他注册特殊的链接类型
+    if (req.headers['sec-websocket-protocol'] === 'control') {
+      console.log('控制端上线啦')
+    }
   }
 
   handleDisconnect(socket) {
+    console.log('disconnect')
     this.disconnect(socket)
   }
 
@@ -72,5 +77,11 @@ export class EventsGateway {
       event: "identity",
       data: OK
     }
+  }
+
+  /** 心跳消息 人性化心跳检测，对服务器说声sb，服务器会回你一句sb */
+  @SubscribeMessage('sb')
+  heart(socket, data: any) {
+    return { event: 'sb', data }
   }
 }

@@ -1,5 +1,5 @@
 import { Tabs, Tab, styled } from '@mui/material'
-import PhoneIcon from '@mui/icons-material/Phone';
+import RemoteDeviceIcon from '@mui/icons-material/InstallMobile';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import PersonPinIcon from '@mui/icons-material/PersonPin';
 import React from 'react'
@@ -54,9 +54,9 @@ export default function () {
         </div>
         {/* tab */}
         <Tabs className='bottom-tab' value={value} onChange={handleChange} aria-label="icon label tabs example">
-            <LinkTab icon={<PhoneIcon />} label="RECENTS" href='/t/recents' />
-            <LinkTab icon={<FavoriteIcon />} label="FAVORITES" href='/t/favorites' />
-            <LinkTab icon={<PersonPinIcon />} label="NEARBY" href='/t/nearby' />
+            <LinkTab icon={<RemoteDeviceIcon />} label="远程控制" href='/t/recents' />
+            <LinkTab icon={<FavoriteIcon />} label="TODO" href='/t/favorites' />
+            <LinkTab icon={<PersonPinIcon />} label="TODO" href='/t/nearby' />
         </Tabs>
     </Box>
 }

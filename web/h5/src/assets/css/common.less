@@ -1,0 +1,221 @@
+// ios 安全区域
+@supports (-webkit-touch-callout: none) {
+  :root {
+    --VH     : calc(100vh - env(safe-area-inset-bottom, 0px) - env(safe-area-inset-top, 0px));
+    --STop   : env(safe-area-inset-top, 0px);
+    --SBottom: env(safe-area-inset-bottom, 0px);
+  }
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing : antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size              : 14px;
+}
+
+ul,
+li {
+  padding   : 0;
+  margin    : 0;
+  list-style: none
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.mg-16 {
+  margin: 16px
+}
+
+.pd-16 {
+  padding: 16px;
+}
+
+.pl-16 {
+  padding-left: 16px;
+}
+
+.mr-16 {
+  margin-right: 16px
+}
+
+.mt-16 {
+  margin-top: 16px;
+}
+
+.mb-16 {
+  margin-bottom: 16px;
+}
+
+.t-10px {
+  font-size: 12px;
+  transform: scale(.83);
+}
+
+.pr-16 {
+  padding-right: 16px;
+}
+
+.f-r {
+  display       : flex;
+  flex-direction: row;
+}
+
+.f-c {
+  display       : flex;
+  flex-direction: column;
+}
+
+.j-center {
+  justify-content: center;
+}
+
+.j-start {
+  justify-content: flex-start;
+}
+
+.j-end {
+  justify-content: flex-end;
+}
+
+.j-around {
+  justify-content: space-around;
+}
+
+.j-between {
+  justify-content: space-between;
+}
+
+.a-center {
+  align-items: center;
+}
+
+.a-start {
+  align-items: flex-start;
+}
+
+.a-end {
+  align-items: flex-end;
+}
+
+.f-w {
+  flex-wrap: wrap;
+}
+
+.s-center {
+  align-self: center
+}
+
+.s-start {
+  align-self: flex-start
+}
+
+.s-end {
+  align-self: flex-end
+}
+
+.hl {
+  color: red;
+}
+
+// 路由样式
+.ka-wrapper {
+  position: absolute;
+  height  : 100%;
+  width   : 100%;
+  top     : 0;
+  left    : 0;
+
+  .ka-content {
+    height: 100%;
+    width : 100%;
+  }
+}
+
+.transition-group {
+  position: absolute;
+  height  : 100%;
+  width   : 100%;
+  top     : 0;
+  left    : 0;
+
+  .forward-enter {
+    opacity  : 0;
+    transform: translateX(100%);
+  }
+
+  .forward-enter-active {
+    opacity   : 1;
+    transform : translateX(0);
+    transition: all 500ms;
+  }
+
+  .forward-exit {
+    opacity  : 1;
+    transform: translateX(0);
+  }
+
+  .forward-exit-active {
+    opacity   : 0;
+    transform : translateX(-100%);
+    transition: all 500ms;
+  }
+
+  .back-enter {
+    opacity  : 0;
+    transform: translateX(-100%);
+  }
+
+  .back-enter-active {
+    opacity   : 1;
+    transform : translateX(0);
+    transition: all 500ms;
+  }
+
+  .back-exit {
+    opacity  : 1;
+    transform: translateX(0);
+  }
+
+  .back-exit-active {
+    opacity   : 0;
+    transform : translate(100%);
+    transition: all 500ms;
+  }
+}
+
+.rvt-backtop {
+  position        : fixed;
+  right           : 40px;
+  bottom          : 100px;
+  height          : 60px;
+  width           : 60px;
+  border-radius   : 30px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color           : #fff;
+  pointer-events  : none;
+  opacity         : 0;
+  transition      : 0.3s;
+  display         : flex;
+  justify-content : center;
+  align-items     : center;
+
+  &.active {
+    opacity       : 1;
+    pointer-events: initial
+  }
+}
+
+.full-width {
+  width: 100%;
+}
+
+.full-height {
+  height: 100%;
+}

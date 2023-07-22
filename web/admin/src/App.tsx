@@ -8,6 +8,7 @@ import config from '@/config'
 import { ConfigProvider } from 'antd'
 import zhCN from 'antd/lib/locale/zh_CN';
 import { useSelector } from 'react-redux'
+import { Provider as WsProvider } from './contexts/ECws/context'
 
 const style = {
   app: {
@@ -34,11 +35,13 @@ function App() {
 
   return <div className='rvt-app' style={style.app}>
     <ConfigProvider locale={zhCN} {...configProps}>
-      <Router basename={config.routeBasename}>
-        {
-          renderRoutes(routes)
-        }
-      </Router>
+      <WsProvider>
+        <Router basename={config.routeBasename}>
+          {
+            renderRoutes(routes)
+          }
+        </Router>
+      </WsProvider>
     </ConfigProvider>
   </div>
 }

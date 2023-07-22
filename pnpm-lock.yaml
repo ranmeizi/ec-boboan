@@ -189,6 +189,7 @@ importers:
       ts-node: ^10.9.1
       tsconfig-paths: ^4.2.0
       typescript: ^5.1.3
+      ws: ^8.13.0
     dependencies:
       '@nestjs/common': 10.0.5_atc7tu2sld2m3nk4hmwkqn6qde
       '@nestjs/core': 10.0.5_nkmo4fjin4jxs2gxvgujqkgiyu
@@ -199,6 +200,7 @@ importers:
       base64id: 2.0.0
       reflect-metadata: 0.1.13
       rxjs: 7.8.1
+      ws: 8.13.0
     devDependencies:
       '@nestjs/cli': 10.1.8
       '@nestjs/schematics': 10.0.1_typescript@5.1.6

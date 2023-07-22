@@ -10,6 +10,7 @@ import EPage403 from '@/views/ErrorPage/403'
 import EPage500 from '@/views/ErrorPage/500'
 import Login from '@/views/Login'
 import Homepage from '@/views/Homepage'
+import DeviceList from '@/views/Device/List'
 
 const SystemModule = new System()
 const ExampleModule = new Example()
@@ -142,6 +143,19 @@ const routes: MyRoute[] = [
                     sort: 1
                 },
                 component: lazy(() => ExampleModule.get('ErrorTest'))
+            },
+            {
+                name: 'DEVICE_LIST',
+                parent: 'root',
+                path: '/f/device/list',
+                isCache: true,
+                isTransition: true,
+                meta: {
+                    icon: 'ClusterOutlined',
+                    title: '在线设备',
+                    sort: 1
+                },
+                component: DeviceList
             },
         ],
     }

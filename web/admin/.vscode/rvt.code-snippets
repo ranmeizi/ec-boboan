@@ -281,22 +281,5 @@
       "// eslint-disable-next-line ",
     ],
     "description": "忽略eslint"
-  },
-  "service-type": {
-    "prefix": "service-type",
-    "body": [
-      "export namespace Types {",
-      "",
-      "}",
-      "",
-      "export namespace Params {",
-      "    ",
-      "}",
-      "",
-      "export namespace DTO {",
-      "    ",
-      "}"
-    ],
-    "description": "service-type"
   }
 }

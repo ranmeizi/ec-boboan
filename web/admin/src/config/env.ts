@@ -7,6 +7,7 @@ type Envs = "DEVELOP" | "TEST" | "UAT" | "RELEASE";
 type Configs = {
   realWorldServer: "realworld 后台服务地址";
   testServer: "测试后台服务地址";
+  ecServer: 'easy click 服务'
   routeBasename: "前端路由基地值";
 };
 
@@ -17,21 +18,25 @@ export type EnvConfig = Record<Envs, ConfigList>;
 const config: EnvConfig = {
   DEVELOP: {
     realWorldServer: "https://api.realworld.io/api",
+    ecServer: 'http://localhost:3000',
     testServer: "试一下",
     routeBasename: "/",
   },
   TEST: {
     realWorldServer: "https://conduit.productionready.io/api",
+    ecServer: 'http://localhost:3000',
     testServer: "试一下",
     routeBasename: "/",
   },
   UAT: {
     realWorldServer: "https://conduit.productionready.io/api",
+    ecServer: 'http://localhost:3000',
     testServer: "试一下",
     routeBasename: "/",
   },
   RELEASE: {
     realWorldServer: "https://conduit.productionready.io/api",
+    ecServer: 'http://localhost:3000',
     testServer: "试一下",
     routeBasename: "/",
   },

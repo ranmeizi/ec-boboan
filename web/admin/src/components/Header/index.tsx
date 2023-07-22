@@ -7,6 +7,7 @@ import * as icons from '@ant-design/icons'
 import Complete from './ExampleSearch'
 import AntConfig from './AntConfig'
 import { useHistory } from 'react-router-dom'
+import WsBar from './ws-bar'
 
 const collapsedSelector = (state: any) => state.app.collapsed
 const themeSelector = (state: any) => state.app.theme
@@ -20,10 +21,11 @@ export default function () {
 
     return <div className='f-r a-center j-between' style={{ height: '100%' }}>
         <div className='f-r a-center'>
-            <Button type="primary" style={{ marginRight: '20px' }} onClick={() => dispatch(setCollapsed(!collapsed))}>
+            {/* <Button type="primary" style={{ marginRight: '20px' }} onClick={() => dispatch(setCollapsed(!collapsed))}>
                 {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined)}
             </Button>
-            <Complete />
+            <Complete /> */}
+            <WsBar />
         </div>
         {contextHolder}
         <div className='f-r'>

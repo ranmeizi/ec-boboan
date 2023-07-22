@@ -22,7 +22,7 @@ function App() {
   }, [])
 
   return <div className='rvt-app'>
-    <RouterProvider router={router} />;
+    <RouterProvider router={router} />
   </div>
 }
 

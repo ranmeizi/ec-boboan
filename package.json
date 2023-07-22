@@ -9,6 +9,8 @@
     "web/*"
   ],
   "scripts": {
-    "dev": "yarn workspace nest_server start:dev"
+    "server":"pnpm -F nest_server start",
+    "admin":"pnpm -F ec-admin dev",
+    "h5":"pnpm -F ec-h5 dev"
   }
 }

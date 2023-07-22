@@ -5,6 +5,7 @@ import { TransitionRoute, KRoute } from "@bomon/expand-router";
 import Favorites from "../views/Favorites";
 import Nearby from "../views/Nearby";
 import Recents from "../views/Recents";
+import RemoteConfig from '@/views/RemoteConfig';
 
 const Redirect = (props: { to: string }) => {
     const navigate = useNavigate();
@@ -17,7 +18,7 @@ const Redirect = (props: { to: string }) => {
 const routes: RouteObject[] = [
     {
         path: "/",
-        element: <Redirect to="/t/recents" />,
+        element: <Redirect to="/t/remote-config" />,
         children: [
             {
                 path: "/t",
@@ -40,11 +41,11 @@ const routes: RouteObject[] = [
                         ),
                     },
                     {
-                        path: "/t/recents",
+                        path: "/t/remote-config",
                         element: (
                             <TransitionRoute cloneNode>
                                 <KRoute>
-                                    <Recents />
+                                    <RemoteConfig />
                                 </KRoute>
                             </TransitionRoute>
                         ),

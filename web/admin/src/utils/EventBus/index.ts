@@ -48,3 +48,4 @@ export class EventBus {
 EventBus.prototype.TYPES = eventTypes
 
 export default new EventBus()
+export const wsEventBus = new EventBus()

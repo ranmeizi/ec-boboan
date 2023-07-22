@@ -19,7 +19,7 @@ type AppState = {
 };
 
 const initialState: AppState = {
-  theme: "dark",
+  theme: "light",
   appTab: "",
   hideTabbar: false,
   hideHeader: false,

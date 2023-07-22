@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { Socket } from 'socket.io';
 
 /**
  * 记录在线设备
