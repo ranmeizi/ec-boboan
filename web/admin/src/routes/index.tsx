@@ -11,6 +11,7 @@ import EPage500 from '@/views/ErrorPage/500'
 import Login from '@/views/Login'
 import Homepage from '@/views/Homepage'
 import DeviceList from '@/views/Device/List'
+import DeviceDetail from '@/views/Device/Detail'
 
 const SystemModule = new System()
 const ExampleModule = new Example()

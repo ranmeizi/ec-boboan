@@ -1,19 +1,14 @@
-import { type } from 'os'
 import React from 'react'
+import Page from '@/components/Page'
+import { Card, Typography } from 'antd'
 
-type Props = {
-
-}
-
-enum EnumStatus{
-    CLOSED,
-    ESTABLISHED,
-    
-}
-
-export default function (props: Props) {
-    return <div>
-        {/* 画布 */}
-        {/* 信息 */}
-    </div>
+export default function () {
+    return <Page>
+        {/* 标题 */}
+        <Typography.Title level={5}>设备控制</Typography.Title>
+        {/* 内容 */}
+        <Card>
+            rvt-page
+        </Card>
+    </Page>
 }

@@ -7,7 +7,8 @@ const initState: WsContext = {
     socket: null,
     url: '',
     setUrl: () => undefined,
-    connect: () => undefined
+    connect: () => undefined,
+    disconnect: () => undefined
 }
 
 type WsContext = {
@@ -15,6 +16,7 @@ type WsContext = {
     url: string,
     setUrl: (url: string) => void
     connect: () => void
+    disconnect: () => void
 }
 
 const context = createContext(initState)
@@ -24,7 +26,7 @@ const Provider = context.Provider
 function WsProvider(props: React.PropsWithChildren) {
     /** 是否与服务器链接 */
     const [socket, setSocket] = useState<WebSocket | null>(null)
-    const [url, setUrl] = useState('ws://localhost:8080')
+    const [url, setUrl] = useState('ws://192.168.2.1:8080')
 
     /** ws 链接 */
     function connect() {
@@ -37,6 +39,7 @@ function WsProvider(props: React.PropsWithChildren) {
 
         ws.addEventListener('open', function () {
             wsEventBus.emit(wsEventBus.TYPES.WS_OPEN, undefined)
+            HeartBeat.start(ws, connect)
         })
 
         ws.addEventListener('close', function () {
@@ -54,15 +57,19 @@ function WsProvider(props: React.PropsWithChildren) {
         })
 
         setSocket(ws)
+    }
 
-        HeartBeat.start(ws, connect)
+    function disconnect() {
+        console.log('断开？',socket)
+        socket?.close()
     }
 
     return <Provider value={{
         socket,
         url,
         setUrl,
-        connect
+        connect,
+        disconnect
     }}>
         {props.children}
     </Provider>

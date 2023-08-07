@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Socket } from 'net';
 
 /**
  * 记录在线设备
@@ -6,10 +7,10 @@ import { Injectable } from '@nestjs/common';
 @Injectable()
 export class SocketsService {
     // 给每个链接一个名字
-    socketKeyMap = new Map()
+    socketKeyMap = new Map<Socket, string>()
 
-    sockets = new Map()
-    
+    sockets = new Map<string, Socket>()
+
     onlineMap: Map<string, OnlineDeviceInfo> = new Map()
 
     async login(id: string, data: OnlineDeviceInfo) {

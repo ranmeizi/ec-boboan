@@ -5,6 +5,7 @@ import SearchForm from './SearchForm'
 import { usePagination, useRowSelection } from '@/utils/hooks/common'
 import { ExpandOutlined } from '@ant-design/icons'
 import * as API from '@/services/ec/device'
+import ConnectionGuard from '@/contexts/ECws/ConnectionGuard'
 
 export default function () {
     // 表单
@@ -106,8 +107,12 @@ function getColumns(ctx: any): TableColumnType<any>[] {
             fixed: 'right',
             render() {
                 return <Space>
-                    <a>查看桌面</a>
-                    <a>远程控制</a>
+                    <ConnectionGuard>
+                        <a onClick={()=>alert('进来了')}>查看桌面</a>
+                    </ConnectionGuard>
+                    <ConnectionGuard>
+                        <a>远程控制</a>
+                    </ConnectionGuard>
                 </Space>
             }
         }

@@ -10,6 +10,7 @@ import {
 import { Server, WebSocket } from 'ws'
 import { OnlineDeviceInfo, SocketsService } from './sockets.service'
 import * as base64id from 'base64id'
+import { Socket } from 'net';
 
 @WebSocketGateway(8080)
 export class EventsGateway {
@@ -46,6 +47,7 @@ export class EventsGateway {
   connect(socket) {
     // 连接时创建唯一的id
     const id = base64id.generateId()
+    console.log(id)
     this.socketsServices.socketKeyMap.set(socket, id)
     this.socketsServices.sockets.set(id, socket)
   }
@@ -82,6 +84,50 @@ export class EventsGateway {
   /** 心跳消息 人性化心跳检测，对服务器说声sb，服务器会回你一句sb */
   @SubscribeMessage('sb')
   heart(socket, data: any) {
+    console.log('heart',data)
     return { event: 'sb', data }
   }
+
+  /**
+   * 请求对应端的画面帧
+   */
+  @SubscribeMessage('reqFrame')
+  reqFrame(socket: Socket, data: ReqFeameData): WsResponse<Res.Data<null>> {
+    const clientSocket = this.socketsServices.sockets.get(data.id)
+    const controlId = this.socketsServices.socketKeyMap.get(socket)
+    if (clientSocket) {
+      clientSocket.emit('reqFrame', {
+        /** 客户端应使用 controlId 向控制端发送数据 */
+        controlId: controlId
+      })
+      return {
+        event: 'reqFrameRes',
+        data: {
+          code: 200,
+          msg: '请求成功',
+          data: null
+        }
+      }
+    } else {
+      return {
+        event: 'reqFrameRes',
+        data: {
+          code: 400,
+          msg: '设备不在线',
+          data: null
+        }
+      }
+    }
+  }
+
+  handleMessage(client: WebSocket, message: Buffer) {
+    console.log('Received binary message from client:', message);
+    // 在这里处理接收到的二进制数据，您可以将其保存、处理或发送给其他客户端
+  }
+}
+
+
+type ReqFeameData = {
+  /** 设备id */
+  id: string
 }
