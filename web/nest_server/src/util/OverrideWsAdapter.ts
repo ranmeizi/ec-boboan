@@ -21,7 +21,6 @@ export class OverrideWsAdapter extends WsAdapter {
                 handler => handler.message === 'binaryData',
             );
             const { callback } = messageHandler;
-
             if (messageHandler) {
                 return transform(callback(buffer.data));
             }

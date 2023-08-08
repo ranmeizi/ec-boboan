@@ -26,9 +26,14 @@ export default function ({
         }: Header & { data: ArrayBuffer }) {
             if (source === deviceInfo?.id) {
                 // 绘图
+                const base64 = new TextDecoder().decode(data);
+                const image = new Image()
+                image.src = 'data:image/jpeg;base64,' + base64
+                // 绘图
                 const ctx = canvas.current?.getContext('2d')
-
-                console.log(data)
+                image.onload=function(){
+                    ctx?.drawImage(image, 0, 0, image.width, image.height, 0, 0, canvas.current!.width, canvas.current!.height)
+                }
             }
         }
 

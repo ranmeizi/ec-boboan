@@ -103,10 +103,33 @@ var Connection = (function () {
         }))
 
     }
+    function sendFrame1(destination, base64) {
+
+        /** 本级由 identity 获得的唯一标识 */
+        const source = UniqueId
+        const header = {
+            event: 0,
+            source: source,
+            destination: destination
+        }
+        // console.log(typeof data,Object.prototype.toString.call(data))
+        // console.log(packet.arrayBufferToString(data))
+
+        /** 封包 加上 header */
+        // const packedData = packet.packData(header, data)
+
+        // socket.sendBinary(packedData)
+        // socket.sendBinary(packedData.getBytes());
+        // socket.sendBinary(java.io.ByteArrayInputStream(data));
+        // socket.sendBinary((new java.lang.Buffer(packedData)).getBytes());
+        // console.log(base64)
+        socket.sendBinary(java.lang.String('00' + source + destination + base64).getBytes());
+    }
 
     return {
         run: run,
-        sendFrame: sendFrame
+        sendFrame: sendFrame,
+        sendFrame1: sendFrame1
     }
 })()
 

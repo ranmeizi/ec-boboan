@@ -19,33 +19,25 @@ var Frame = (function () {
                 state = 1
 
                 const { height, width } = deviceInfo
+                // function capture(){
+                //     let cap = image.captureScreen(1, 0, 0, width, height)
+                //     const base64 = image.toBase64Format(cap, "jpg", 35);
+                //     Connection.sendFrame1(data.controlId, base64)
+                //     //图片要回收
+                //     // sleep(20)
+                //     image.recycle(cap)
+                //     setTimeout(capture,50)
+                // }
                 function capture(){
-                    let cap = image.captureScreen(3, 0, 0, width, height)
-                    const base64 = image.toBase64Format(cap, "jpg", 10);
-                    Connection.sendFrame(data.controlId, base64)
+                    let cap = image.captureScreenBitmapEx()
+                    const base64 =  image.bitmapBase64(cap,"jpg",15);
+                    Connection.sendFrame1(data.controlId, base64)
                     //图片要回收
                     // sleep(20)
                     image.recycle(cap)
-                    setTimeout(capture,20)
+                    setTimeout(capture,30)
                 }
                 capture()
-                // while (true) {
-                //     // let cap = image.captureScreenBitmap("jpg", 0, 0, width, height, 50);
-                //     // let cap = image.captureFullScreen()
-                //     let cap = image.captureScreen(3, 0, 0, width, height)
-                //     // logd("截图数据: " + typeof cap)
-                //     // let w = cap.getWidth();
-                //     // let h = cap.getHeight();
-                //     // let mPixels = image.getPixelsBitmap(cap, w * h, 0, w, 0, 0, w, h);
-                //     // console.log(typeof mPixels,Object.prototype.toString.call(mPixels))
-                //     const base64 = image.toBase64Format(cap, "png", 30);
-                //     Connection.sendFrame(data.controlId, base64)
-                   
-                //     //图片要回收
-                //     image.recycle(cap)
-
-                //     sleep(1000)
-                // }
             }
         })
     }

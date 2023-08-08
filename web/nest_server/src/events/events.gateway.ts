@@ -206,15 +206,14 @@ export class EventsGateway {
 
   @SubscribeMessage('binaryData')
   handleBinaryData(socket: WebSocket, @MessageBody() message: Buffer) {
-    console.log('binary消息', message.buffer)
     try {
       // 转发给 destination
       const { header: { source, destination, event }, data } = unpackData(message.buffer)
-      console.log('destination', destination)
+      // console.log('destination', destination)
       const socket = this.socketsServices.sockets.get(destination)
       socket.send(message)
     } catch (e) {
-      console.log(e)
+      // console.log(e)
     }
   }
 }

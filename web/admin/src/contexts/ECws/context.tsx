@@ -41,6 +41,7 @@ function WsProvider(props: React.PropsWithChildren) {
 
         /** TODO 控制端需要特殊的校验 */
         const ws = new WebSocket(url, ['control'])
+        ws.binaryType = 'arraybuffer'
 
         ws.addEventListener('open', function () {
             wsEventBus.emit(wsEventBus.TYPES.WS_OPEN, undefined)
@@ -53,14 +54,14 @@ function WsProvider(props: React.PropsWithChildren) {
             HeartBeat.stop()
         })
 
-        ws.addEventListener('message', function (event) {
+        ws.addEventListener('message', async function (event) {
             if (typeof event.data === 'string') {
                 wsEventBus.emit(wsEventBus.TYPES.WS_TEXT_MSG, JSON.parse(event.data))
             } else {
                 // 解包
                 try {
                     const { header, data } = unpackData(event.data)
-                    console.log(header, data)
+
                     wsEventBus.emit(wsEventBus.TYPES.WS_BINARY_MSG, {
                         ...header,
                         data

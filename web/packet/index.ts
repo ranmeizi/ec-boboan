@@ -69,7 +69,6 @@ function unpackData(combinedBuffer: ArrayBuffer): { header: Header, data: ArrayB
     const senderBytes = new Uint8Array(combinedBuffer, EVENT_LENGTH, SOURCE_LENGTH)
 
     const source = new TextDecoder().decode(senderBytes);
-    console.log('source',source)
 
     const destinationBytes = new Uint8Array(combinedBuffer, EVENT_LENGTH + SOURCE_LENGTH, DESTINATION_LENGTH)
 
