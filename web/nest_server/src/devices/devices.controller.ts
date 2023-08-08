@@ -1,6 +1,5 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { SocketsService } from '../events/sockets.service'
-import { Request } from 'express'
 import { Res } from 'src/util/response';
 
 @Controller('devices')
@@ -47,5 +46,19 @@ export class DevicesController {
             pageNumber: pageNum,
             pageSize
         })
+    }
+
+    @Get('findById')
+    findById(@Query('id') id) {
+        const deviceInfo = this.socketsService.onlineMap.get(id)
+
+        if (deviceInfo) {
+            return Res.data({
+                ...deviceInfo,
+                id
+            })
+        } else {
+            return Res.error(`查询不到 id = ${id}的数据`)
+        }
     }
 }

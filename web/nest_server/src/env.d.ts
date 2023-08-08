@@ -1,4 +1,4 @@
-declare var OK: 0
+declare var OK: 200
 
 declare namespace Res {
     type Data<T> = {

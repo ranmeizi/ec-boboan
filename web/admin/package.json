@@ -25,7 +25,8 @@
     "redux": "^4.1.1",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
-    "sortablejs": "^1.14.0"
+    "sortablejs": "^1.14.0",
+    "packet": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.15.0",

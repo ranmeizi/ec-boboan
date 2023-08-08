@@ -148,15 +148,26 @@ const routes: MyRoute[] = [
             {
                 name: 'DEVICE_LIST',
                 parent: 'root',
-                path: '/f/device/list',
+                path: '/f/device',
                 isCache: true,
                 isTransition: true,
+                exact:true,
                 meta: {
                     icon: 'ClusterOutlined',
                     title: '在线设备',
                     sort: 1
                 },
                 component: DeviceList
+            },
+            {
+                name: 'DEVICE_LIST',
+                path: '/f/device/:id',
+                isCache: false,
+                isTransition: true,
+                meta: {
+                    title: '设备详情',
+                },
+                component: DeviceDetail
             },
         ],
     }

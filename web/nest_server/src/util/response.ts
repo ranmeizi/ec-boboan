@@ -7,10 +7,10 @@ class Res {
         }
     }
 
-    static error() {
+    static error(msg ='') {
         return {
             code: 500,
-            msg: ''
+            msg: msg
         }
     }
 }

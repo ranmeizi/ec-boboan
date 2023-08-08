@@ -6,6 +6,7 @@ import { usePagination, useRowSelection } from '@/utils/hooks/common'
 import { ExpandOutlined } from '@ant-design/icons'
 import * as API from '@/services/ec/device'
 import ConnectionGuard from '@/contexts/ECws/ConnectionGuard'
+import { useHistory } from 'react-router-dom'
 
 export default function () {
     // 表单
@@ -17,6 +18,7 @@ export default function () {
     const [pagination, setPagination, paginationProps] = usePagination()
     // 选择器
     const { selectionProps, showDetail, reset } = useRowSelection()
+    const history = useHistory()
 
     useEffect(() => {
         getData(1)
@@ -43,8 +45,12 @@ export default function () {
         })
     }
 
+    function navToDetail(id: string) {
+        history.push(`/f/device/${id}`)
+    }
+
     const columns: any[] = useMemo(() => {
-        return getColumns({})
+        return getColumns({ navToDetail })
     }, [])
 
     return <Page>
@@ -105,10 +111,10 @@ function getColumns(ctx: any): TableColumnType<any>[] {
             title: '操作',
             width: 180,
             fixed: 'right',
-            render() {
+            render(text, record) {
                 return <Space>
                     <ConnectionGuard>
-                        <a onClick={()=>alert('进来了')}>查看桌面</a>
+                        <a onClick={() => ctx.navToDetail(record.id)}>查看桌面</a>
                     </ConnectionGuard>
                     <ConnectionGuard>
                         <a>远程控制</a>

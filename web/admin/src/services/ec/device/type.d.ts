@@ -11,6 +11,7 @@ declare namespace Params {
 declare namespace DTOs {
     export namespace Device {
         type OnlineDeviceInfo = {
+            id: string,
             width: number,
             height: number,
             ip?: string

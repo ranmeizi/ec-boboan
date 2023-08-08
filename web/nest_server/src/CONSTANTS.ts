@@ -1,1 +1,1 @@
-global.OK = 0
+global.OK = 200
