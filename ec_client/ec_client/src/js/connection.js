@@ -17,8 +17,8 @@ var Connection = (function () {
     // 运行
     function run() {
 
-        // socket = http.newWebsocket('ws://192.168.2.1:8080', null, 2);
-        socket = http.newWebsocket('ws://192.168.1.6:8080', null, 2);
+        socket = http.newWebsocket('ws://192.168.2.1:8080', null, 2);
+        // socket = http.newWebsocket('ws://192.168.1.6:8080', null, 2);
 
         // 设置type=1的时候链接参数
         socket.setCallTimeout(5);
@@ -32,7 +32,6 @@ var Connection = (function () {
 
         //设置有文本信息监听器
         socket.onText(function (ws1, text) {
-            console.log('啥jb', text)
             try {
                 const event = JSON.parse(text)
                 event_handler(event)
@@ -60,7 +59,6 @@ var Connection = (function () {
 
     // 事件 handler
     function event_handler(e) {
-        console.log('来消息啦', JSON.stringify(e))
         const { event, data } = e
         EB.emit(event, data)
     }

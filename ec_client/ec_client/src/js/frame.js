@@ -28,18 +28,31 @@ var Frame = (function () {
                 //     image.recycle(cap)
                 //     setTimeout(capture,50)
                 // }
-                function capture(){
+                function capture() {
+                    if (state !== 1) {
+                        return
+                    }
                     let cap = image.captureScreenBitmapEx()
-                    const base64 =  image.bitmapBase64(cap,"jpg",15);
+                    const base64 = image.bitmapBase64(cap, "jpg", 10);
                     Connection.sendFrame1(data.controlId, base64)
                     //图片要回收
                     // sleep(20)
                     image.recycle(cap)
-                    setTimeout(capture,30)
+                    setTimeout(capture, 16)
                 }
                 capture()
             }
         })
+
+        EB.on('reqFrameStop', () => {
+            if (state === 1) {
+                state = 0
+            }
+        })
+
+        setInterval(()=>{
+            console.log('frame state='+state)
+        },5000)
     }
 
     return {

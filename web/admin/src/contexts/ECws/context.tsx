@@ -29,8 +29,8 @@ const Provider = context.Provider
 function WsProvider(props: React.PropsWithChildren) {
     /** 是否与服务器链接 */
     const [socket, setSocket] = useState<WebSocket | null>(null)
-    // const [url, setUrl] = useState('ws://192.168.2.1:8080')
-    const [url, setUrl] = useState('ws://192.168.1.6:8080')
+    const [url, setUrl] = useState('ws://192.168.2.1:8080')
+    // const [url, setUrl] = useState('ws://192.168.1.6:8080')
 
 
     /** ws 链接 */

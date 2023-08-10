@@ -86,4 +86,26 @@ function unpackData(combinedBuffer: ArrayBuffer): { header: Header, data: ArrayB
     }
 }
 
-export { packData, unpackData, EnumEventType,Header }
+/** 给中间人用的 解header */
+function unpackHeader(combinedBuffer: ArrayBuffer): Header{
+
+    const eventBytes = new Uint8Array(combinedBuffer, 0, EVENT_LENGTH)
+
+    const event = parseInt(new TextDecoder().decode(eventBytes));
+
+    const senderBytes = new Uint8Array(combinedBuffer, EVENT_LENGTH, SOURCE_LENGTH)
+
+    const source = new TextDecoder().decode(senderBytes);
+
+    const destinationBytes = new Uint8Array(combinedBuffer, EVENT_LENGTH + SOURCE_LENGTH, DESTINATION_LENGTH)
+
+    const destination = new TextDecoder().decode(destinationBytes);
+
+    return {
+        event,
+        source,
+        destination
+    }
+}
+
+export { packData, unpackData,unpackHeader, EnumEventType,Header }

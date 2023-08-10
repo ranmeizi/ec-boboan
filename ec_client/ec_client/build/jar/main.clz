@@ -1,5 +1,6 @@
+com.js._eventbus
 com.js.connection
-com.js.eventbus
+com.js.control
 com.js.frame
 com.js.main
 com.js.util

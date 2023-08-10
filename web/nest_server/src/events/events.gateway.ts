@@ -10,7 +10,7 @@ import {
 import { Server, WebSocket } from 'ws'
 import { OnlineDeviceInfo, SocketsService } from './sockets.service'
 import * as base64id from 'base64id'
-import { packData, unpackData } from 'packet'
+import { unpackHeader, unpackData } from 'packet'
 
 @WebSocketGateway(8080)
 export class EventsGateway {
@@ -142,12 +142,13 @@ export class EventsGateway {
   reqFrameStop(socket: WebSocket, data: ReqFeameStopData): WsResponse<Res.Data<boolean>> {
     console.log('reqFrameStop', data)
     const clientSocket = this.socketsServices.sockets.get(data.id)
-    const controlId = this.socketsServices.socketKeyMap.get(socket)
+    // const controlId = this.socketsServices.socketKeyMap.get(socket)
     if (clientSocket) {
-      clientSocket.emit('reqFrameStop', {
+      clientSocket.send(JSON.stringify({
+        event: 'reqFrameStop',
         /** 客户端应使用 controlId 向控制端发送数据 */
-        controlId: controlId
-      })
+        data: {}
+      }))
       return {
         event: 'reqFrameStopRes',
         data: {
@@ -204,11 +205,22 @@ export class EventsGateway {
     }))
   }
 
+  @SubscribeMessage('controlTouchEvent')
+  controlTouchEvent(socket: WebSocket, data: ControlTouchEvent) {
+    const {deviceId}=data
+    const deviceSocket = this.socketsServices.sockets.get(deviceId)
+
+    deviceSocket.send(JSON.stringify({
+      event: 'controlTouchEvent',
+      data: data
+    }))
+  }
+
   @SubscribeMessage('binaryData')
   handleBinaryData(socket: WebSocket, @MessageBody() message: Buffer) {
     try {
       // 转发给 destination
-      const { header: { source, destination, event }, data } = unpackData(message.buffer)
+      const { destination } = unpackHeader(message.buffer)
       // console.log('destination', destination)
       const socket = this.socketsServices.sockets.get(destination)
       socket.send(message)
@@ -221,6 +233,13 @@ type JsonBase64FrameData = {
   source: string,
   destination: string,
   frame: string
+}
+
+type ControlTouchEvent = {
+  type: 'touchDown' | 'touchMove' | 'touchUp',
+  deviceId: string,
+  x: number,
+  y: number
 }
 
 type ReqFeameData = {
