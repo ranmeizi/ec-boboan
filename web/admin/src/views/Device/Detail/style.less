@@ -8,14 +8,40 @@
             height: 100%;
             width : 100%;
 
-            .ant-card-body,.device-control-root {
-                height: 100%;
-                width : 100%;
+            .ant-card-body,
+            .device-control-root {
+                height    : 100%;
+                width     : 100%;
+                box-sizing: border-box;
             }
         }
     }
 
-    .device-control__canvas{
+    .device-control__root {
+        border-radius: 8px;
+        border       : 2px rgba(0, 0, 0, .4) solid;
+        overflow     : hidden;
+        width: min-content;
+    }
+
+    .device-control__canvas {
         background-color: #000;
+        flex            : 1;
+    }
+
+    .device-control__virtual {
+        height   : 48px;
+        font-size: 18px;
+    }
+
+    .divice-control__icon-button {
+        height: 100%;
+        flex            : 1;
+        transition      : 0.3s;
+        background-color: rgba(0, 0, 0, 0);
+
+        &:active {
+            background-color: rgba(0, 0, 0, .15);
+        }
     }
 }

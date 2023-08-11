@@ -12,5 +12,23 @@ var control = (function () {
         }
     })
 
+    EB.on('controlActionEvent', (data) => {
+        const { type, data: _data } = data
+        //'keyboard' | 'keyboardCode' | 'systemHome' | 'systemBack' | 'systemRecent',
+        switch (type) {
+            case 'keyboard':
+                ; break;
+            case 'keyboardCode':
+                ; break;
+            case 'systemHome':
+                home(); break;
+            case 'systemBack':
+                back(); break;
+            case 'systemRecent':
+                recentApps(); break;
+        }
+    })
+
+
     return {}
 })()

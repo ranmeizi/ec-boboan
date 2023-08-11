@@ -127,7 +127,9 @@ var Connection = (function () {
     return {
         run: run,
         sendFrame: sendFrame,
-        sendFrame1: sendFrame1
+        sendFrame1: sendFrame1,
+        getSocket: () => socket,
+        Event:Event
     }
 })()
 

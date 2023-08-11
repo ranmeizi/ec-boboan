@@ -54,7 +54,7 @@ export default function () {
         </div>
         {/* tab */}
         <Tabs className='bottom-tab' value={value} onChange={handleChange} aria-label="icon label tabs example">
-            <LinkTab icon={<RemoteDeviceIcon />} label="远程控制" href='/t/recents' />
+            <LinkTab icon={<RemoteDeviceIcon />} label="远程控制" href='/t/remote-config' />
             <LinkTab icon={<FavoriteIcon />} label="TODO" href='/t/favorites' />
             <LinkTab icon={<PersonPinIcon />} label="TODO" href='/t/nearby' />
         </Tabs>

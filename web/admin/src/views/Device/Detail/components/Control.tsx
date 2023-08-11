@@ -3,27 +3,23 @@ import { wsEventBus } from '@/utils/EventBus'
 import { Header } from 'packet'
 import { context } from '@/contexts/ECws/context'
 import { throttle } from '@/utils'
-
+import { HomeOutlined, LeftOutlined, MenuOutlined } from '@ant-design/icons'
 type Props = {
     id: string
-    cardRect?: DOMRect,
     deviceInfo?: DTOs.Device.OnlineDeviceInfo
 }
 
 export default function ({
     id,
-    cardRect,
     deviceInfo
 }: Props) {
     const canvas = useRef<HTMLCanvasElement>(null)
     const { sendText } = useContext(context)
+
     useEffect(() => {
-        if (!cardRect || !deviceInfo) {
+        if (!deviceInfo) {
             return
         }
-
-        // 初始化大小
-        init()
 
         if (!canvas.current) {
             return
@@ -31,9 +27,19 @@ export default function ({
         const el = canvas.current
         const rect = el.getBoundingClientRect()
 
+        console.log(rect)
+
+        // 初始化大小
+        // 按高度缩放
+        const h = rect.height
+        const w = rect.height / deviceInfo!.height * deviceInfo!.width
+        el.style.height = h + 'px'
+        el.style.width = w + 'px'
+        el.height = h
+        el.width = w
 
         // 换算
-        const zoom = deviceInfo.height / canvas.current.height
+        const zoom = deviceInfo.height / el.height
 
         function onDown(e: MouseEvent) {
             const { offsetX: x, offsetY: y } = e
@@ -54,17 +60,7 @@ export default function ({
                 x: zoom * x,
                 y: zoom * y
             })
-        }, 30)
-
-        // function onMove(e: MouseEvent) {
-        //     const { x, y } = calcXY(rect, e.pageX, e.pageY)
-        //     sendText('controlTouchEvent', {
-        //         deviceId: id,
-        //         type: 'touchMove',
-        //         x: zoom * x,
-        //         y: zoom * y
-        //     })
-        // }
+        }, 150)
 
         function onUp(e: MouseEvent) {
             el.removeEventListener('mousemove', onMove)
@@ -76,18 +72,6 @@ export default function ({
                 y: zoom * y
             })
         }
-
-        el.addEventListener('mousedown', onDown)
-        el.addEventListener('mouseup', onUp)
-
-        return () => {
-            el.removeEventListener('mousedown', onDown)
-            el.removeEventListener('mouseup', onUp)
-            el.removeEventListener('mouseup', onUp)
-        }
-    }, [cardRect, deviceInfo])
-
-    useEffect(() => {
         function handleBinaryMessage({
             source,
             data
@@ -100,7 +84,7 @@ export default function ({
                 // 绘图
                 const ctx = canvas.current?.getContext('2d')
                 image.onload = function () {
-                    ctx?.drawImage(image, 0, 0, image.width, image.height, 0, 0, canvas.current!.width, canvas.current!.height)
+                    ctx?.drawImage(image, 0, 0, image.width, image.height, 0, 0, w, h)
                 }
             }
         }
@@ -112,29 +96,49 @@ export default function ({
                 // 绘图
                 const ctx = canvas.current?.getContext('2d')
                 image.onload = function () {
-                    ctx?.drawImage(image, 0, 0, image.width, image.height, 0, 0, canvas.current!.width, canvas.current!.height)
+                    ctx?.drawImage(image, 0, 0, image.width, image.height, 0, 0, w, h)
                 }
             }
         }
         wsEventBus.on(wsEventBus.TYPES.WS_BINARY_MSG, handleBinaryMessage)
         wsEventBus.on(wsEventBus.TYPES.WS_TEXT_MSG, handleJsonBase64Frame)
+
+        el.addEventListener('mousedown', onDown)
+        el.addEventListener('mouseup', onUp)
+        el.addEventListener('mouseout',onUp)
+
         return () => {
+            el.removeEventListener('mousedown', onDown)
+            el.removeEventListener('mouseup', onUp)
+            el.removeEventListener('mouseout',onUp)
             wsEventBus.un(wsEventBus.TYPES.WS_BINARY_MSG, handleBinaryMessage)
             wsEventBus.un(wsEventBus.TYPES.WS_TEXT_MSG, handleJsonBase64Frame)
         }
     }, [deviceInfo])
 
-    function init() {
-        if (!canvas.current) {
-            return
-        }
-        // 按高度缩放
-        canvas.current.height = cardRect!.height
-        canvas.current.width = cardRect!.height / deviceInfo!.height * deviceInfo!.width
+    function emitSysEvent(type:'systemHome'|'systemBack'|'systemRecent'){
+        sendText('controlActionEvent',{
+            type:type,
+            deviceId: id,
+        })
     }
 
-    return <canvas
-        className='device-control__canvas'
-        ref={canvas}
-    ></canvas>
+    return <div className='device-control__root f-c full-height'>
+        <canvas
+            className='device-control__canvas'
+            ref={canvas}
+        ></canvas>
+        {/* 虚拟home */}
+        <div className='device-control__virtual f-r j-around a-center'>
+            <div className='divice-control__icon-button f-r j-around a-center' onClick={()=>emitSysEvent('systemHome')}>
+                <LeftOutlined />
+            </div>
+            <div className='divice-control__icon-button f-r j-around a-center' onClick={()=>emitSysEvent('systemBack')}>
+                <HomeOutlined />
+            </div>
+            <div className='divice-control__icon-button f-r j-around a-center' onClick={()=>emitSysEvent('systemRecent')}>
+                <MenuOutlined />
+            </div>
+        </div>
+    </div>
 }

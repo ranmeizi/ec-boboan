@@ -1,5 +1,8 @@
 var Frame = (function () {
+    /** 发送状态 */
     var state = 0
+    var controlId = undefined
+    var BEAT_TIMEOUT = 3000
 
     function init() {
         console.log('Frame init')
@@ -18,42 +21,60 @@ var Frame = (function () {
                 // 开始发送画面数据哦
                 state = 1
 
-                const { height, width } = deviceInfo
-                // function capture(){
-                //     let cap = image.captureScreen(1, 0, 0, width, height)
-                //     const base64 = image.toBase64Format(cap, "jpg", 35);
-                //     Connection.sendFrame1(data.controlId, base64)
-                //     //图片要回收
-                //     // sleep(20)
-                //     image.recycle(cap)
-                //     setTimeout(capture,50)
-                // }
+                controlId = data.controlId
+
+                beatControl()
+
                 function capture() {
                     if (state !== 1) {
                         return
                     }
                     let cap = image.captureScreenBitmapEx()
-                    const base64 = image.bitmapBase64(cap, "jpg", 10);
-                    Connection.sendFrame1(data.controlId, base64)
+                    const base64 = image.bitmapBase64(cap, "jpg", 7);
+                    Connection.sendFrame1(controlId, base64)
                     //图片要回收
                     // sleep(20)
                     image.recycle(cap)
-                    setTimeout(capture, 16)
+                    setTimeout(capture, 24)
                 }
                 capture()
             }
         })
 
-        EB.on('reqFrameStop', () => {
-            if (state === 1) {
-                state = 0
-            }
-        })
 
-        setInterval(()=>{
-            console.log('frame state='+state)
-        },5000)
+        setInterval(() => {
+            console.log('frame state=' + state)
+        }, 5000)
     }
+
+
+    /** 为了避免发送错误id，需要定时请求 controlId 的链接是否存在 */
+    function beatControl() {
+        const socket = Connection.getSocket()
+        const Event = Connection.Event
+        if (controlId) {
+            socket.sendText(Event('isOnline', {
+                id: controlId
+            }))
+
+            setTimeout(beatControl, BEAT_TIMEOUT);
+        }
+    }
+
+
+    EB.on('reqFrameStop', () => {
+        if (state === 1) {
+            state = 0
+        }
+    })
+
+
+    EB.on('isOnlineRes', (data) => {
+        if (data.code !== 200) {
+            state = 0
+            controlId = undefined
+        }
+    })
 
     return {
         init: init

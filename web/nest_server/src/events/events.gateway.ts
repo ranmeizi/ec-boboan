@@ -176,7 +176,7 @@ export class EventsGateway {
 
     if (clientSocket) {
       return {
-        event: 'isOnline',
+        event: 'isOnlineRes',
         data: {
           code: 200,
           msg: '在线',
@@ -185,7 +185,7 @@ export class EventsGateway {
       }
     } else {
       return {
-        event: 'reqFrameStopRes',
+        event: 'isOnlineRes',
         data: {
           code: 400,
           msg: '不在线',
@@ -206,8 +206,8 @@ export class EventsGateway {
   }
 
   @SubscribeMessage('controlTouchEvent')
-  controlTouchEvent(socket: WebSocket, data: ControlTouchEvent) {
-    const {deviceId}=data
+  controlTouchEvent(socket: WebSocket, data: ControlTouchEventData) {
+    const { deviceId } = data
     const deviceSocket = this.socketsServices.sockets.get(deviceId)
 
     deviceSocket.send(JSON.stringify({
@@ -215,6 +215,18 @@ export class EventsGateway {
       data: data
     }))
   }
+
+  @SubscribeMessage('controlActionEvent')
+  controlActionEvent(socket: WebSocket, data: ControlActionEventData) {
+    const { deviceId } = data
+    const deviceSocket = this.socketsServices.sockets.get(deviceId)
+
+    deviceSocket.send(JSON.stringify({
+      event: 'controlActionEvent',
+      data: data
+    }))
+  }
+
 
   @SubscribeMessage('binaryData')
   handleBinaryData(socket: WebSocket, @MessageBody() message: Buffer) {
@@ -235,11 +247,17 @@ type JsonBase64FrameData = {
   frame: string
 }
 
-type ControlTouchEvent = {
+type ControlTouchEventData = {
   type: 'touchDown' | 'touchMove' | 'touchUp',
   deviceId: string,
   x: number,
   y: number
+}
+
+type ControlActionEventData = {
+  type: 'keyboard' | 'keyboardCode' | 'systemHome' | 'systemBack' | 'systemRecent',
+  deviceId: string,
+  data: any
 }
 
 type ReqFeameData = {

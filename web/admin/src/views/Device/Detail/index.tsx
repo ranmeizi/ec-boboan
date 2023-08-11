@@ -45,7 +45,7 @@ export default function () {
         {/* 内容 */}
         <Card className='inner-card'>
             <div className='device-control-root'>
-                <Control id={id} cardRect={cardRect} deviceInfo={info} />
+                <Control id={id} deviceInfo={info} />
             </div>
         </Card>
     </Page>
